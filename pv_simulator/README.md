@@ -1,3 +1,11 @@
+Consume `meter` data from rabbitMQ.
+Using png mask generate pv values. Any image size or ration.
+Height will be scaled to fit min and max value proportionally.
+Width will be scaled to fix 24 hours proportionally.
+
+##### example pattern:
+![regular.png](..%2Fpv_patterns%2Fregular.png)
+
 ### Environment Variables
 
 | Name                   | Required | Description                                                | Default                        |

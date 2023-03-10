@@ -1,3 +1,5 @@
+Produces random value about power consumption in range between min and max and send it to rabbitMQ.
+
 ### Environment Variables
 
 | Name                   | Required | Description                                                | Default                        |
