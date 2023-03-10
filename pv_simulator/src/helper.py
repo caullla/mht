@@ -10,10 +10,19 @@ def to_seconds(dt: datetime) -> float:
 
 
 def load_data(pattern_path: str, min_val=0, max_val=3500) -> np.array:
-    im = np.asarray(Image.open(pattern_path).convert('L')) # noqa
-    mask = np.amax(im, axis=0) == 0
+    """
+    convert png file into d1 array of power values during the day
+    """
+    data = np.asarray(Image.open(pattern_path).convert('L')) # noqa
 
-    im = im.shape[0] - np.argmax(im, axis=0)
-    im[mask] = 0
+    # mark all columns with values equal 0
+    mask = np.amax(data, axis=0) == 0
+
+    data = data.shape[0] - np.argmax(data, axis=0)
+    # force replace marked columns with zero
+    data[mask] = 0
     value_range = max_val - min_val
-    return im / im.shape[0] * value_range + min_val
+
+    data = data / data.shape[0]
+    data = data * value_range + min_val
+    return data

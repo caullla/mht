@@ -32,7 +32,7 @@ def main() -> None:
     )
 
     while True:
-        power = int(np.random.uniform(settings.METER_MIN_VALUE, settings.METER_MAX_VALUE))
+        power = round(np.random.uniform(settings.METER_MIN_VALUE, settings.METER_MAX_VALUE), 2)
         channel.basic_publish(
             exchange=exchange,
             routing_key='',

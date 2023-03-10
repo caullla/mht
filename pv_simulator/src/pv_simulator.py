@@ -15,11 +15,12 @@ class PVSimulator:
 
     def draw_value_with_deviation(self, current_dt: datetime) -> float:
         value = self.draw_value(current_dt)
-        return value * (1 + np.random.uniform(self.deviation * -1, self.deviation))
+        value = value * (1 + np.random.uniform(self.deviation * -1, self.deviation))
+        return round(value, 2)
 
     def draw_value(self, current_dt: datetime) -> float:
         seconds = to_seconds(current_dt)
         offset = seconds / TOTAL_DAY_SECONDS
         index = math.floor(offset * self.data.shape[0])
-        return self.data[index]
+        return round(self.data[index], 2)
 
