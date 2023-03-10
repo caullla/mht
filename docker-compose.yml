@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  meter:
+    tty: true
+    build:
+      context: ./meter
+    volumes:
+      - ./meter/src:/src
+    depends_on:
+      broker:
+        condition: service_healthy
+  pv_simulator:
+    tty: true
+    build:
+      context: ./pv_simulator
+    volumes:
+      - ./pv_simulator/src:/src
+      - ./output:/output
+      - ./pv_patterns:/pv_patterns
+    environment:
+      - RABBITMQ_URL=amqp://guest:guest@broker:5672
+    depends_on:
+      broker:
+        condition: service_healthy
+  broker:
+    image: rabbitmq
+    hostname: broker
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq/mnesia/
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+volumes:
+  rabbitmq_data:
