@@ -41,8 +41,7 @@ def on_message(
     current_dt = datetime.now(tz=pytz.timezone(settings.TIME_ZONE))
     pv_power = simulator.draw_value_with_deviation(current_dt)
     sum_power = meter_power + pv_power
-    # log using csv friendly format
-    logger.info(f'{current_dt.isoformat()},{meter_power},{pv_power},{sum_power}')
+    logger.info(f'{current_dt.isoformat()} {meter_power} {pv_power} {sum_power}')
 
 
 def main() -> None:
